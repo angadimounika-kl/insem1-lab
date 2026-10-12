@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Hostel Complaint System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <div class="logo">SH</div>
+        <div>
+            <h2>Smart Hostel</h2>
+            <p>Complaint Management System</p>
+        </div>
+    </div>
+    <span class="live-badge">● System Active</span>
+</header>
+
+<main class="container">
+    <section class="welcome">
+        <div>
+            <p class="eyebrow">HOSTEL MANAGEMENT PORTAL</p>
+            <h1>Complaint Dashboard</h1>
+            <p>Report problems, track progress, and manage hostel complaints.</p>
+        </div>
+        <div class="date-card">
+            <span>Today's Date</span>
+            <strong id="today"></strong>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stat-card">
+            <span>Total Complaints</span>
+            <h2 id="totalCount">0</h2>
+            <p>All submitted records</p>
+        </div>
+        <div class="stat-card pending-card">
+            <span>Pending</span>
+            <h2 id="pendingCount">0</h2>
+            <p>Awaiting attention</p>
+        </div>
+        <div class="stat-card progress-card">
+            <span>In Progress</span>
+            <h2 id="progressCount">0</h2>
+            <p>Currently being handled</p>
+        </div>
+        <div class="stat-card resolved-card">
+            <span>Resolved</span>
+            <h2 id="resolvedCount">0</h2>
+            <p>Successfully completed</p>
+        </div>
+    </section>
+
+    <section class="content-grid">
+        <div class="panel form-panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow">SUBMIT A REQUEST</p>
+                    <h2>Register Complaint</h2>
+                </div>
+                <div class="heading-icon">✎</div>
+            </div>
+
+            <form id="complaintForm">
+                <div class="field">
+                    <label for="studentName">Student Name *</label>
+                    <input type="text" id="studentName"
+                           placeholder="Enter full name" required maxlength="80">
+                </div>
+
+                <div class="two-columns">
+                    <div class="field">
+                        <label for="rollNumber">Roll Number *</label>
+                        <input type="text" id="rollNumber"
+                               placeholder="e.g. 2500040101" required maxlength="30">
+                    </div>
+                    <div class="field">
+                        <label for="roomNumber">Room Number *</label>
+                        <input type="text" id="roomNumber"
+                               placeholder="e.g. B-204" required maxlength="20">
+                    </div>
+                </div>
+
+                <div class="two-columns">
+                    <div class="field">
+                        <label for="category">Category *</label>
+                        <select id="category" required>
+                            <option value="">Select category</option>
+                            <option>Electrical</option>
+                            <option>Plumbing</option>
+                            <option>Cleaning</option>
+                            <option>Food</option>
+                            <option>Wi-Fi / Internet</option>
+                            <option>Furniture</option>
+                            <option>Security</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="priority">Priority *</label>
+                        <select id="priority" required>
+                            <option value="">Select priority</option>
+                            <option>Low</option>
+                            <option selected>Medium</option>
+                            <option>High</option>
+                            <option>Urgent</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="location">Complaint Location *</label>
+                    <input type="text" id="location"
+                           placeholder="e.g. Second floor bathroom" required maxlength="100">
+                </div>
+
+                <div class="field">
+                    <label for="description">Complaint Description *</label>
+                    <textarea id="description" rows="4"
+                              placeholder="Explain the problem clearly..."
+                              required maxlength="1000"></textarea>
+                </div>
+
+                <button type="submit" class="primary-btn">
+                    + Submit Complaint
+                </button>
+                <p id="formMessage" class="form-message" role="status"></p>
+            </form>
+        </div>
+
+        <div class="panel info-panel">
+            <p class="eyebrow">HOW IT WORKS</p>
+            <h2>Complaint Process</h2>
+
+            <div class="process-step">
+                <div class="step-number">01</div>
+                <div>
+                    <h3>Submit Complaint</h3>
+                    <p>Enter student details and describe the hostel issue.</p>
+                </div>
+            </div>
+
+            <div class="process-step">
+                <div class="step-number">02</div>
+                <div>
+                    <h3>Review & Action</h3>
+                    <p>The complaint can be marked as in progress.</p>
+                </div>
+            </div>
+
+            <div class="process-step">
+                <div class="step-number">03</div>
+                <div>
+                    <h3>Resolve the Issue</h3>
+                    <p>Update the status when the problem is fixed.</p>
+                </div>
+            </div>
+
+            <div class="notice">
+                <strong>Important</strong>
+                <p>Keep the complaint ID to identify and track your request.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel records-panel" id="records">
+        <div class="records-heading">
+            <div>
+                <p class="eyebrow">COMPLAINT MANAGEMENT</p>
+                <h2>All Complaint Records</h2>
+                <p class="subtext">View, search, and update every saved complaint.</p>
+            </div>
+            <button type="button" id="exportBtn" class="secondary-btn">
+                ↓ Export CSV
+            </button>
+        </div>
+
+        <div class="toolbar">
+            <input type="search" id="searchInput"
+                   placeholder="Search name, roll number, room or ID...">
+            <select id="statusFilter" aria-label="Filter by status">
+                <option value="All">All Statuses</option>
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Resolved">Resolved</option>
+            </select>
+            <select id="categoryFilter" aria-label="Filter by category">
+                <option value="All">All Categories</option>
+                <option>Electrical</option>
+                <option>Plumbing</option>
+                <option>Cleaning</option>
+                <option>Food</option>
+                <option>Wi-Fi / Internet</option>
+                <option>Furniture</option>
+                <option>Security</option>
+                <option>Other</option>
+            </select>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Complaint ID</th>
+                        <th>Student Details</th>
+                        <th>Category / Priority</th>
+                        <th>Location & Description</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="recordsBody"></tbody>
+            </table>
+        </div>
+
+        <div id="emptyState" class="empty-state">
+            <div class="empty-icon">▤</div>
+            <h3>No complaints found</h3>
+            <p>Submit a complaint using the form to see its record here.</p>
+        </div>
+
+        <div class="records-footer">
+            <span id="recordCount">Showing 0 records</span>
+            <button type="button" id="clearBtn" class="danger-btn">
+                Clear All Records
+            </button>
+        </div>
+    </section>
+
+    <footer>
+        Smart Hostel Complaint System · Student Support Portal
+    </footer>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
